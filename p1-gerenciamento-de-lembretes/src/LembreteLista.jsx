@@ -9,7 +9,10 @@ export class LembreteLista extends Component {
                     <h4 className='text-center'>{this.props.descricao}</h4>
                 </div>
                 <div className="p-2">
-                    <button className='btn btn-outline-primary w-100 mt-2'>
+                    <button 
+                        className='btn btn-outline-primary w-100 mt-2'
+                        onClick={this.props.mudar}
+                    >
                         <i className={`fa-${this.props.favorito? 'solid' : 'regular'} fa-star`}></i>
                         
                     </button>

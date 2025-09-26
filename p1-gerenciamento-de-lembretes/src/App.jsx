@@ -5,11 +5,27 @@ import LembreteLista from './LembreteLista'
 class App extends React.Component {
 
   state = {
-    lembretes: []
+    lembretes: [],
+
   }
   removerLembrete = (id) => {
     const atualizarLembrete = this.state.lembretes.filter((lembrete) => lembrete.id !== id)
+    this.setState({ lembretes: atualizarLembrete })
+  }
+
+  mudarFavorito = (id) => {
+    const atualizarLembrete = this.state.lembretes.map((lembrete) => {
+      if (lembrete.id === id) {
+        return {
+          id: lembrete.id,
+          descricao: lembrete.descricao,
+          favorito: !lembrete.favorito
+        }
+      }
+      return lembrete
+    })
     this.setState({ lembretes: atualizarLembrete})
+
   }
 
   componentDidMount() {
@@ -30,20 +46,24 @@ class App extends React.Component {
         favorito: false
       }
     ]
-    this.setState({lembretes: lembretesFicticios })
+    this.setState({ lembretes: lembretesFicticios })
   }
   render() {
     return (
       <div className="container border rounded my-2 p-3">
         <div className="row">
           {
-            this.state.lembretes.map((lembrete) => (
+            this.state.lembretes
+            .map((lembrete) => (
               <div className="col-12">
                 <LembreteLista
                   descricao={lembrete.descricao}
-                  favorito={lembrete.favorito} 
-                  remover={ () => this.removerLembrete(lembrete.id)}/>
+                  favorito={lembrete.favorito}
+                  mudar={() => this.mudarFavorito(lembrete.id)}
+                  remover={() => this.removerLembrete(lembrete.id)} />
+
               </div>
+              
             ))
           }
         </div>
